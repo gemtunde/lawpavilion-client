@@ -83,7 +83,7 @@ export default function RegisterForm() {
             A confirmation email has been sent to {email}. Click the link to
             <Link
               className="ml-1 text-green-700 font-semibold cursor-pointer"
-              href="/login"
+              href="/auth/login"
             >
               Verify Email.
             </Link>
@@ -247,7 +247,7 @@ export default function RegisterForm() {
             <p className="text-gray-600">
               Already have an account?{" "}
               <Link
-                href="/login"
+                href="/auth/login"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
                 Sign in

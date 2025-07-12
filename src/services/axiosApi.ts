@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
-        window.location.href = "/";
+        //  window.location.href = "/auth/login";
         return Promise.reject(refreshError);
       }
     }
