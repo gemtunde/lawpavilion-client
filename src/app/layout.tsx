@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/components/Provider";
 import { Toaster } from "@/components/ui/sonner";
+import EmailVerificationOverlay from "@/components/VerificationOverlay";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ export default function RootLayout({
       >
         <Providers>
           {children}
-          {/* <EmailVerificationOverlay /> */}
+          <EmailVerificationOverlay />
         </Providers>
         <Toaster />
       </body>
