@@ -1,16 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  CreditCard,
-  History,
-  Home,
-  Send,
-  Shield,
-  Users,
-  Wallet,
-} from "lucide-react";
+import { AudioWaveform, Home, Shield } from "lucide-react";
 
 import {
   Sidebar,
@@ -27,7 +18,7 @@ import { NavUser } from "./NavUser";
 const data = {
   user: {
     name: "Tunde Elesho",
-    email: "tunde@impactpay.com",
+    email: "tunde@lawpavilion.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: {
@@ -37,13 +28,9 @@ const data = {
   },
 
   navMain: [
-    { title: "Dashboard", url: "/home", icon: Home, isActive: true },
-    { title: "Send Money", url: "/send", icon: Send },
-    { title: "Fund Wallet", url: "/wallet", icon: Wallet },
-    { title: "Transactions", url: "/transactions", icon: History },
-    { title: "Payment Methods", url: "/payment", icon: CreditCard },
-    { title: "Recipients", url: "/recipients", icon: Users },
-    { title: "Security", url: "/security", icon: Shield },
+    { title: "Dashboard", url: "/dashboard", icon: Home, isActive: true },
+
+    { title: "Settings", url: "/dashboard/settings", icon: Shield },
   ],
 };
 

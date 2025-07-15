@@ -55,11 +55,10 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {userData?.firstName || "Tunde"}{" "}
-                  {userData?.lastName || "Esho"}
+                  {userData?.firstName || "-"} {userData?.lastName || "-"}
                 </span>
                 <span className="truncate text-xs">
-                  {userData?.email || "tunde@swiftnaira.com"}
+                  {userData?.email || "tunde@lawpavilion.com"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -79,11 +78,10 @@ export function NavUser({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {userData?.firstName || "Tunde"}{" "}
-                    {userData?.lastName || "Esho"}
+                    {userData?.firstName || "-"} {userData?.lastName || "-"}
                   </span>
                   <span className="truncate text-xs">
-                    {userData?.email || "tunde@swiftnaira.com"}
+                    {userData?.email || "tunde@lawpavilion.com"}
                   </span>
                 </div>
               </div>

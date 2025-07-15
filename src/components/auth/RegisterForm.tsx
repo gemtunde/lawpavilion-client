@@ -32,12 +32,7 @@ export default function RegisterForm() {
       agreeTerms: false,
     },
   });
-  const {
-    control,
-    handleSubmit,
-    watch,
-    //formState: { isSubmitting },
-  } = form;
+  const { control, handleSubmit, watch } = form;
   const password = watch("password");
   const email = watch("email");
 
@@ -61,7 +56,6 @@ export default function RegisterForm() {
           onSuccess: async (res) => {
             console.log("Registration successful:", res.data);
             toast.success(res.data.message ?? "Register was successful");
-            //router.push('/home')
           },
           onError: (error) => {
             toast.error(error?.message ?? "An error occured. Pls try again");

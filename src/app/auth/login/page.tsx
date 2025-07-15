@@ -9,29 +9,27 @@ export default function LoginPage() {
   const services: ServiceType[] = [
     {
       id: 1,
-      name: "Bank-level Security",
-      description: "  256-bit SSL encryption & CBN licensed",
+      name: "High-level Security",
+      description: "256-bit SSL encryption licensed",
       icon: Shield,
     },
     {
       id: 2,
-      name: "Best Exchange Rates",
-      description: "   Save up to 85% on transfer fees",
+      name: "Best Service Rates",
+      description: " Save up to 45% on service fees",
       icon: TrendingUp,
     },
     {
       id: 3,
       name: "Trusted by Millions",
-      description: "Over ₦50B transferred safely",
+      description: "Over 2 Million users monthly",
       icon: Users,
     },
   ];
   return (
     <AuthFormCard
-      //   title="Welcome back"
-      //   description="Sign in to your account to continue sending money"
-      titleBanner="Send money to Nigeria with confidence"
-      descriptionBanner="Join over 500,000 users who trust SwiftNaira for fast, secure, and affordable transfers to Nigeria."
+      titleBanner="Tech Law in Nigeria with confidence"
+      descriptionBanner="Join over 500,000 users who trust Law Pavilion for fast, secure, and affordable law services in Nigeria."
       url="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       services={services}
     >

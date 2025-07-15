@@ -34,12 +34,11 @@ export default function LoginForm() {
     //formState: { isSubmitting },
   } = form;
 
-  const { setUser } = useAuth();
+  const { refreshAuth } = useAuth();
   const loginMutation = useLogin();
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      console.log("Login:", data);
       loginMutation.mutate(
         {
           password: data?.password ?? "",
@@ -50,14 +49,15 @@ export default function LoginForm() {
             Cookies.set("accessToken", res.data.accessToken, {
               secure: true,
               sameSite: "strict",
-              expires: 1,
+              //expires: 5,
             });
             Cookies.set("refreshToken", res.data.refreshToken, {
               secure: true,
               sameSite: "strict",
-              expires: 7,
+              //expires: 7,
             });
-            setUser(res.data.user);
+            await refreshAuth();
+            // setUser(res.data);
             toast.success(res.data.message ?? "Login was successful");
             router.push("/dashboard");
           },

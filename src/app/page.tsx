@@ -1,9 +1,6 @@
 "use client";
 
-//import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-//import { useAuthStore } from "@/lib/auth-store";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,379 +9,302 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
 import {
   BookOpen,
-  Users,
   Shield,
+  Users,
   TrendingUp,
-  ArrowRight,
-  CheckCircle,
   Star,
+  ShoppingCart,
 } from "lucide-react";
+import Image from "next/image";
 
-export default function Home() {
-  const router = useRouter();
-  // const { isAuthenticated } = useAuthStore();
+const products = [
+  {
+    id: 1,
+    name: "Legal Research Pro",
+    description:
+      "Comprehensive legal research platform with access to case law, statutes, and regulations",
+    price: 99.99,
+    category: "Software",
+    rating: 4.8,
+    reviews: 245,
+    features: [
+      "Case Law Database",
+      "Statute Search",
+      "Legal Analytics",
+      "Document Templates",
+    ],
+    image:
+      "https://images.pexels.com/photos/5668772/pexels-photo-5668772.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+  {
+    id: 2,
+    name: "Contract Templates Bundle",
+    description:
+      "Professional contract templates for various legal practice areas",
+    price: 49.99,
+    category: "Templates",
+    rating: 4.9,
+    reviews: 189,
+    features: [
+      "50+ Templates",
+      "Customizable",
+      "Legally Reviewed",
+      "Regular Updates",
+    ],
+    image:
+      "https://images.pexels.com/photos/4427611/pexels-photo-4427611.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+  {
+    id: 3,
+    name: "Case Management System",
+    description: "Complete case management solution for law firms of all sizes",
+    price: 199.99,
+    category: "Software",
+    rating: 4.7,
+    reviews: 312,
+    features: [
+      "Client Portal",
+      "Time Tracking",
+      "Billing Integration",
+      "Document Management",
+    ],
+    image:
+      "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+  {
+    id: 4,
+    name: "Legal Writing Guide",
+    description:
+      "Comprehensive guide to legal writing and document preparation",
+    price: 29.99,
+    category: "Book",
+    rating: 4.6,
+    reviews: 156,
+    features: [
+      "Digital Format",
+      "Practical Examples",
+      "Writing Tips",
+      "Citation Guide",
+    ],
+    image:
+      "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+  {
+    id: 5,
+    name: "Compliance Management Suite",
+    description: "Tools and resources for regulatory compliance management",
+    price: 149.99,
+    category: "Software",
+    rating: 4.8,
+    reviews: 203,
+    features: [
+      "Compliance Tracking",
+      "Audit Tools",
+      "Reporting",
+      "Risk Assessment",
+    ],
+    image:
+      "https://images.pexels.com/photos/5668774/pexels-photo-5668774.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+  {
+    id: 6,
+    name: "Legal Ethics Course",
+    description:
+      "Online course covering legal ethics and professional responsibility",
+    price: 79.99,
+    category: "Course",
+    rating: 4.9,
+    reviews: 128,
+    features: [
+      "CLE Credits",
+      "Interactive Content",
+      "Certificate",
+      "Expert Instructors",
+    ],
+    image:
+      "https://images.pexels.com/photos/5668869/pexels-photo-5668869.jpeg?auto=compress&cs=tinysrgb&w=400",
+  },
+];
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [isAuthenticated, router]);
+export default function ProductsPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const features = [
-    {
-      icon: BookOpen,
-      title: "Legal Research",
-      description: "Access comprehensive legal databases and research tools",
-    },
-    {
-      icon: Users,
-      title: "Case Management",
-      description: "Streamline your workflow with advanced case management",
-    },
-    {
-      icon: Shield,
-      title: "Secure Platform",
-      description: "Bank-grade security for all your legal documents",
-    },
-    {
-      icon: TrendingUp,
-      title: "Analytics",
-      description: "Track performance and gain insights into your practice",
-    },
-  ];
+  const categories = ["All", "Software", "Templates", "Book", "Course"];
 
-  const plans = [
-    {
-      name: "Starter",
-      price: "$29",
-      period: "/month",
-      description: "Perfect for individual practitioners",
-      features: [
-        "Basic legal research",
-        "Document templates",
-        "Email support",
-        "5 GB storage",
-      ],
-      popular: false,
-    },
-    {
-      name: "Professional",
-      price: "$99",
-      period: "/month",
-      description: "Ideal for growing law firms",
-      features: [
-        "Advanced legal research",
-        "Case management",
-        "Priority support",
-        "50 GB storage",
-        "Team collaboration",
-        "Custom templates",
-      ],
-      popular: true,
-    },
-    {
-      name: "Enterprise",
-      price: "$299",
-      period: "/month",
-      description: "For large law firms and organizations",
-      features: [
-        "Full platform access",
-        "Custom integrations",
-        "Dedicated support",
-        "Unlimited storage",
-        "Advanced analytics",
-        "White-label options",
-      ],
-      popular: false,
-    },
-  ];
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "Software":
+        return <Shield className="w-5 h-5" />;
+      case "Templates":
+        return <BookOpen className="w-5 h-5" />;
+      case "Book":
+        return <BookOpen className="w-5 h-5" />;
+      case "Course":
+        return <Users className="w-5 h-5" />;
+      default:
+        return <TrendingUp className="w-5 h-5" />;
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Navigation */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Shield className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">
-                LegalTech Pro
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                onClick={() => router.push("/auth/login")}
-              >
-                Sign In
-              </Button>
-              <Button
-                onClick={() => router.push("/auth/register")}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Modern Legal Technology
-              <span className="block text-blue-600">Built for Success</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Streamline your legal practice with our comprehensive platform.
-              Research, manage cases, and collaborate with your team - all in
-              one place.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                onClick={() => router.push("/auth/register")}
-                className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-4"
-              >
-                Start Free Trial
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4">
-                Watch Demo
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Comprehensive tools designed specifically for legal professionals
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-lg transition-shadow"
-              >
-                <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <feature.icon className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 text-center">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Choose the plan that fits your practice. No hidden fees, no
-              surprises.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((plan, index) => (
-              <Card
-                key={index}
-                className={`relative ${
-                  plan.popular ? "border-blue-500 shadow-lg scale-105" : ""
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-blue-600 text-white px-4 py-1">
-                      <Star className="w-4 h-4 mr-1" />
-                      Most Popular
-                    </Badge>
-                  </div>
-                )}
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold text-gray-900">
-                      {plan.price}
-                    </span>
-                    <span className="text-gray-600">{plan.period}</span>
-                  </div>
-                  <CardDescription className="mt-2">
-                    {plan.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center">
-                        <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    className={`w-full ${
-                      plan.popular ? "bg-blue-600 hover:bg-blue-700" : ""
-                    }`}
-                    variant={plan.popular ? "default" : "outline"}
-                    onClick={() => router.push("/auth/register")}
-                  >
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Practice?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Join thousands of legal professionals who trust LegalTech Pro
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="secondary"
-              onClick={() => router.push("/auth/register")}
-              className="text-lg px-8 py-4"
-            >
-              Start Your Free Trial
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-blue-600"
-            >
-              Contact Sales
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Shield className="w-6 h-6 text-blue-400" />
-                <span className="text-lg font-bold">LegalTech Pro</span>
+    <>
+      <div className="flex h-screen bg-gray-50">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+            <div className="max-w-7xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  Legal Products & Services
+                </h1>
+                <p className="text-gray-600">
+                  Discover professional legal tools and resources
+                </p>
               </div>
-              <p className="text-gray-400">
-                Modern legal technology solutions for the digital age.
-              </p>
+
+              {/* Category Filter */}
+              <div className="mb-8">
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
+                      onClick={() => setSelectedCategory(category)}
+                      className="flex items-center space-x-2"
+                    >
+                      {getCategoryIcon(category)}
+                      <span>{category}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map((product) => (
+                  <Card
+                    key={product.id}
+                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                  >
+                    <div className="aspect-video overflow-hidden">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        height={200}
+                        width={400}
+                      />
+                    </div>
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <Badge
+                          variant="secondary"
+                          className="flex items-center space-x-1"
+                        >
+                          {getCategoryIcon(product.category)}
+                          <span>{product.category}</span>
+                        </Badge>
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                          <span className="text-sm text-gray-600">
+                            {product.rating}
+                          </span>
+                          <span className="text-sm text-gray-400">
+                            ({product.reviews})
+                          </span>
+                        </div>
+                      </div>
+                      <CardTitle className="text-xl">{product.name}</CardTitle>
+                      <CardDescription>{product.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-4">
+                        <div className="text-3xl font-bold text-gray-900 mb-2">
+                          ${product.price}
+                        </div>
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {product.features.map((feature, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {feature}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      <Button
+                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        //onClick={() => handlePurchase(product)}
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Buy now
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Featured Section */}
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Why Choose Our Products?
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <Shield className="w-8 h-8 text-blue-600 mb-2" />
+                      <CardTitle>Professional Quality</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-600">
+                        All our products are created by legal professionals and
+                        reviewed by experts.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <TrendingUp className="w-8 h-8 text-green-600 mb-2" />
+                      <CardTitle>Regular Updates</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-600">
+                        Stay current with the latest legal developments and
+                        regulatory changes.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <Users className="w-8 h-8 text-purple-600 mb-2" />
+                      <CardTitle>Expert Support</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-600">
+                        Get help from our team of legal technology experts
+                        whenever you need it.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Security
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Integrations
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Help Center
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Community
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Status
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 LegalTech Pro. All rights reserved.</p>
-          </div>
+          </main>
         </div>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 }

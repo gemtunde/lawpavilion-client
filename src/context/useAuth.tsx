@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-//import { api } from './api';
 import Cookies from "js-cookie";
 import axiosApi from "@/services/axiosApi";
 
@@ -18,7 +17,6 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   setUser: (user: User | null) => void;
-  //login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshAuth: () => Promise<void>;
 }
@@ -26,9 +24,22 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUserState] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  const saveUserToLocalStorage = (user: User | null) => {
+    if (user) {
+      localStorage.setItem("authUser", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("authUser");
+    }
+  };
+
+  const setUser = (user: User | null) => {
+    setUserState(user);
+    saveUserToLocalStorage(user);
+  };
 
   const refreshAuth = async () => {
     try {
@@ -39,29 +50,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
+      localStorage.removeItem("authUser");
     }
   };
-
-  // const login = async (email: string, password: string) => {
-  //   const response = await axiosApi.post('/auth/login', { email, password });
-  //   setUser(response.data.user);
-  // };
 
   const logout = async () => {
     try {
       await axiosApi.post("/auth/logout");
-      router.push("/login");
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
       setUser(null);
-      router.push("/login");
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
+      router.push("/auth/login");
     }
   };
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("authUser");
+    if (storedUser) {
+      setUserState(JSON.parse(storedUser));
+    }
+
     const initAuth = async () => {
       const accessToken = Cookies.get("accessToken");
       if (accessToken) {

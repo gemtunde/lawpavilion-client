@@ -9,7 +9,6 @@ export type ResendVerificationEmailResponseType = {
 const ResendVerificationEmail = async (): Promise<
   AxiosResponse<ResendVerificationEmailResponseType>
 > => {
-  //return axiosApi.post('auth/resend-verification')
   const response = await axiosApi.post("/auth/resend-verification");
   return response.data;
 };

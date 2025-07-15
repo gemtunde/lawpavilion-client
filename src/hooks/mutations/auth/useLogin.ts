@@ -6,13 +6,12 @@ export type LoginResponseType = {
   message: string;
   accessToken: string;
   refreshToken: string;
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    isVerified: boolean;
-  };
+
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  isVerified: boolean;
 };
 
 type LoginInputType = {
@@ -20,12 +19,13 @@ type LoginInputType = {
   email: string;
 };
 
-const login = (
+const login = async (
   input: LoginInputType
 ): Promise<AxiosResponse<LoginResponseType>> => {
-  return axiosApi.post("auth/login", input, {
+  const response = await axiosApi.post("auth/login", input, {
     withCredentials: true,
   });
+  return response.data;
 };
 
 const useLogin = () => {

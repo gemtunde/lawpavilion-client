@@ -16,10 +16,7 @@ const refreshInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("accessToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // No need to manually attach token here
     return config;
   },
   (error) => Promise.reject(error)

@@ -1,6 +1,6 @@
 import RegisterForm from "@/components/auth/RegisterForm";
 import { AuthFormCard } from "@/components/form/AuthFormCard";
-import { CheckCheck, Clock, LucideProps, Shield } from "lucide-react";
+import { Clock, LucideProps, Shield } from "lucide-react";
 import React from "react";
 
 export interface ServiceType {
@@ -26,18 +26,12 @@ export default function Register() {
       description: "KYC verified & fully regulated",
       icon: Shield,
     },
-    {
-      id: 3,
-      name: "Instant Transfers",
-      description: "Money delivered in minutes",
-      icon: CheckCheck,
-    },
   ];
 
   return (
     <AuthFormCard
-      titleBanner="Join the future of money transfers"
-      descriptionBanner="Create your account in minutes and start sending money to Nigeria with the best rates and fastest delivery."
+      titleBanner="Join the future of Legal Tenhnology"
+      descriptionBanner="Create your account in seconds."
       url="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       services={services}
     >

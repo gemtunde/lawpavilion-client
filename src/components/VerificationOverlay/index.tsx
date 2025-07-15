@@ -17,14 +17,22 @@ import { Mail, RefreshCw, CheckCircle, Loader2 } from "lucide-react";
 //import { toast } from 'sonner';
 import useResendVerificationEmail from "@/hooks/mutations/auth/useResendVerificationEmail";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function EmailVerificationOverlay() {
   const { user, refreshAuth } = useAuth();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const resendEmail = useResendVerificationEmail();
 
+  const pathname = usePathname();
+
   // Don't show overlay if user is verified or doesn't exist
-  if (!user || user.isVerified) {
+  if (
+    !user ||
+    user.isVerified ||
+    pathname === "/" ||
+    pathname.startsWith("/auth")
+  ) {
     return null;
   }
 
@@ -54,13 +62,7 @@ export default function EmailVerificationOverlay() {
       setIsRefreshing(false);
     }
   };
-  // <Image
-  //         src="/asset/email-verify.svg" // Put a nice illustration in /public
-  //         alt="Verify Email"
-  //         width={150}
-  //         height={150}
-  //         className="mx-auto mb-4"
-  //       />
+
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-2xl border-0 animate-in fade-in-0 zoom-in-95 duration-300">
@@ -72,8 +74,7 @@ export default function EmailVerificationOverlay() {
             Verify Your Email
           </CardTitle>
           <CardDescription className="text-base">
-            Please verify your email address to continue using SwiftNaira
-            Payments
+            Please verify your email address to continue using Law Pavilion
           </CardDescription>
         </CardHeader>
 

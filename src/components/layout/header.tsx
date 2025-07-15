@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/useAuth";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 export function Header() {
   const { logout, user } = useAuth();
@@ -30,14 +31,12 @@ export function Header() {
         </div>
 
         <div className="flex items-center space-x-4">
-          <div className="text-right hidden md:block">
-            <p className="text-sm font-medium text-gray-900">Current Rate</p>
-            <p className="text-xs text-green-600">$1 = ₦1,485.50</p>
-          </div>
-
+          <ThemeToggle />
           <Button variant="ghost" size="sm" className="relative">
             <Bell className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full">
+              2
+            </span>
           </Button>
 
           <DropdownMenu>
@@ -55,10 +54,10 @@ export function Header() {
                 </Avatar>
                 <div className="text-left hidden md:block">
                   <p className="text-sm font-medium text-gray-900">
-                    {user?.firstName || "Tunde"} {user?.lastName || "Esho"}
+                    {user?.firstName || "-"} {user?.lastName || "-"}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {user?.email || "tunde@swiftnaira.com"}
+                    {user?.email || "tunde@lawpavilion.com"}
                   </p>
                 </div>
               </Button>
