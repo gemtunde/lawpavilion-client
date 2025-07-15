@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         // ⚠️ Use refreshInstance here instead of axiosInstance
-        const res = await refreshInstance.post("/auth/refresh-token");
+        const res = await refreshInstance.post("/auth/refresh");
 
         // Save new tokens (update this logic to match your backend response)
         Cookies.set("accessToken", res.data.accessToken);
