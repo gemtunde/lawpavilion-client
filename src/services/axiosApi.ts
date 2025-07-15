@@ -12,6 +12,9 @@ const axiosInstance = axios.create({
 const refreshInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 axiosInstance.interceptors.request.use(
@@ -32,11 +35,11 @@ axiosInstance.interceptors.response.use(
 
       try {
         // ⚠️ Use refreshInstance here instead of axiosInstance
-        const res = await refreshInstance.post("/auth/refresh");
+        await refreshInstance.post("/auth/refresh");
 
         // Save new tokens (update this logic to match your backend response)
-        Cookies.set("accessToken", res.data.accessToken);
-        Cookies.set("refreshToken", res.data.refreshToken);
+        // Cookies.set("accessToken", res.data.accessToken);
+        // Cookies.set("refreshToken", res.data.refreshToken);
 
         // Retry the original request with new token
         return axiosInstance(originalRequest);
