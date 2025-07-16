@@ -24,7 +24,7 @@ const data = {
   teams: {
     name: "Law Pavilion",
     logo: AudioWaveform,
-    plan: "₦igeria Exchange",
+    plan: "Legal Tech",
   },
 
   navMain: [

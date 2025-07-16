@@ -63,7 +63,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Metrics Cards */}
-        <div className="grid grid-cols-1 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
               <CardTitle>Total Revenue</CardTitle>
@@ -135,28 +135,26 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <TransactionsTable
-              transactions={transactionsData?.data || []}
-              isLoading={isLoadingTransactions}
-              currentPage={currentPage}
-              pages={transactionsData?.pages || 0}
-              total={transactionsData?.total || 10}
-              pageSize={pageSize}
-              searchItem={searchItem}
-              onSearch={(value: string) => {
-                setSearchItem(value);
-                setCurrentPage(1);
-              }}
-              onPageChange={(page: number) => setCurrentPage(page)}
-              onPageSizeChange={(size: number) => {
-                setPageSize(size);
-                setCurrentPage(1);
-              }}
-              onRefetch={() => refetch()}
-            />
-          </div>
+        <div className="grid grid-cols-1">
+          <TransactionsTable
+            transactions={transactionsData?.data || []}
+            isLoading={isLoadingTransactions}
+            currentPage={currentPage}
+            pages={transactionsData?.pages || 0}
+            total={transactionsData?.total || 10}
+            pageSize={pageSize}
+            searchItem={searchItem}
+            onSearch={(value: string) => {
+              setSearchItem(value);
+              setCurrentPage(1);
+            }}
+            onPageChange={(page: number) => setCurrentPage(page)}
+            onPageSizeChange={(size: number) => {
+              setPageSize(size);
+              setCurrentPage(1);
+            }}
+            onRefetch={() => refetch()}
+          />
         </div>
       </div>
     </main>
