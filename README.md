@@ -35,7 +35,7 @@ b- server repo  - https://github.com/gemtunde/lawpavilion-server
      paste below into the server env file
  FRONTEND_URL=http://localhost:3000
 BASE_URL=http://localhost:3000
-MONGO_URI=mongodb+srv://gemtunde:zNiVDLxXA4IcjkTL@cluster0.qd9ckou.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+MONGO_URI= check email for this
 PORT=8000
 NODE_ENV=development
 
