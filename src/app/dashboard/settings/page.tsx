@@ -16,10 +16,10 @@ import { UserPlus } from "lucide-react";
 import { ProfileFormData, profileSchema } from "@/lib/validations/auth";
 import useUpdateProfile from "@/hooks/mutations/auth/useUpdateProfile";
 import { toast } from "sonner";
+//import { useQueryClient } from "@tanstack/react-query";
 
 export default function Settings() {
-  const { user } = useAuth();
-  console.log("User in Settings:", user);
+  const { user, refreshAuth } = useAuth();
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -37,7 +37,6 @@ export default function Settings() {
   const updateProfileMutation = useUpdateProfile();
   const onSubmit = async (data: ProfileFormData) => {
     try {
-      console.log("update prfile:", data);
       updateProfileMutation.mutate(
         {
           firstName: data.firstName,
@@ -46,7 +45,7 @@ export default function Settings() {
         },
         {
           onSuccess: async (res) => {
-            console.log("Profile Update successful:", res.data);
+            await refreshAuth();
             toast.success(res.data.message ?? "Profile Update was successful");
           },
           onError: (error) => {

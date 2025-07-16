@@ -59,10 +59,6 @@ export function AuthFormCard({
               ))}
             </div>
           </div>
-
-          <footer className="text-sm text-white/60">
-            <p>Licensed by CBN • Regulated by FINTRAC • Insured by FDIC</p>
-          </footer>
         </div>
       </section>
 
@@ -82,7 +78,6 @@ export function AuthFormCard({
 
           <footer className="mt-8 text-center text-xs text-gray-500">
             <p>Protected by 256-bit SSL encryption</p>
-            <p className="mt-1">Licensed by CBN • Regulated by FINTRAC</p>
           </footer>
         </div>
       </section>

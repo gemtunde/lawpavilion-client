@@ -28,7 +28,7 @@ export default function LoginPage() {
   ];
   return (
     <AuthFormCard
-      titleBanner="Tech Law in Nigeria with confidence"
+      titleBanner="Law in Nigeria with confidence"
       descriptionBanner="Join over 500,000 users who trust Law Pavilion for fast, secure, and affordable law services in Nigeria."
       url="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       services={services}

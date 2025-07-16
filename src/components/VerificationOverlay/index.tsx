@@ -1,11 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-//import Image from 'next/image'
 import { useAuth } from "@/context/useAuth";
-//import axiosApi from '@/services/axiosApi'
-import { toast } from "sonner";
-//import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -13,16 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, RefreshCw, CheckCircle, Loader2 } from "lucide-react";
-//import { toast } from 'sonner';
-import useResendVerificationEmail from "@/hooks/mutations/auth/useResendVerificationEmail";
-import { useState } from "react";
+import { Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function EmailVerificationOverlay() {
-  const { user, refreshAuth } = useAuth();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const resendEmail = useResendVerificationEmail();
+  const { user } = useAuth();
 
   const pathname = usePathname();
 
@@ -35,33 +25,6 @@ export default function EmailVerificationOverlay() {
   ) {
     return null;
   }
-
-  const handleResendEmail = async () => {
-    try {
-      await resendEmail.mutateAsync();
-      toast.success("Verification email sent! Please check your inbox.");
-    } catch (error) {
-      console.error("Resend email error:", error);
-      toast.error("Failed to send verification email");
-    }
-  };
-
-  const handleRefreshStatus = async () => {
-    setIsRefreshing(true);
-    try {
-      await refreshAuth();
-      if (user?.isVerified) {
-        toast.success("Email verification confirmed!");
-      } else {
-        toast.info("Email not yet verified. Please check your email.");
-      }
-    } catch (error) {
-      console.error("Refresh verification status error:", error);
-      toast.error("Failed to refresh verification status");
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -125,46 +88,6 @@ export default function EmailVerificationOverlay() {
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="space-y-3">
-            <Button
-              onClick={handleRefreshStatus}
-              disabled={isRefreshing}
-              className="w-full bg-green-600 hover:bg-green-700"
-            >
-              {isRefreshing ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Checking...
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="w-4 h-4 mr-2" />I have verified my
-                  email
-                </>
-              )}
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={handleResendEmail}
-              disabled={resendEmail.isPending}
-              className="w-full"
-            >
-              {resendEmail.isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Resend verification email
-                </>
-              )}
-            </Button>
           </div>
 
           {/* Help Text */}

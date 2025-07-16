@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
 
-```bash
+Git clone the 
+step - 1 
+https://github.com/gemtunde/lawpavilion-client
+
+step -2 
+create a .env file, copy and past NEXT_PUBLIC_BASE_URL=http://localhost:8000/api   into the env file
+
+step -3 
+npm install from your root directory terminal
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+######
+
+step 4 
+repeat same processes above for the server folder
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Video Demo
+    a -   https://www.loom.com/share/ec9bed291a8142cfbd28ce28ba645762
+ b  - https://www.loom.com/share/246d54df8d8046488e095c8b3330167a  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#  Github Repo
+a -  client repo - https://github.com/gemtunde/lawpavilion-client
+b- server repo  - https://github.com/gemtunde/lawpavilion-server
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# frontend/client env file
+     paste below into the client env file
+     NEXT_PUBLIC_BASE_URL=http://localhost:8000/api
 
-## Learn More
+# . backend/server env file
+     paste below into the server env file
+ FRONTEND_URL=http://localhost:3000
+BASE_URL=http://localhost:3000
+MONGO_URI=mongodb+srv://gemtunde:zNiVDLxXA4IcjkTL@cluster0.qd9ckou.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+PORT=8000
+NODE_ENV=development
 
-To learn more about Next.js, take a look at the following resources:
+JWT_SECRET=your_jwt_secret_here
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_here
+JWT_EXPIRES_IN=25m
+JWT_REFRESH_EXPIRES_IN=7d
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#npm run dev both in the client repo and server repo
+  

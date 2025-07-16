@@ -1,26 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
+import dynamic from "next/dynamic";
 import { useAuth } from "@/context/useAuth";
 import { useTransactionHistory } from "@/hooks/query/transactions";
 import { TransactionsTable } from "../shared/TransactionsTable";
 import { useMetrics } from "@/hooks/query/metrics";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
 export interface ITransactionProps {
   _id: string;
@@ -31,6 +16,27 @@ export interface ITransactionProps {
   stripePaymentIntentId: string;
   createdAt: string;
 }
+// Lazy import components
+const MetricsCards = dynamic(
+  () =>
+    import("@/components/dashboard/MetricsCards").then(
+      (mod) => mod.MetricsCards
+    ),
+  {
+    loading: () => <p>Loading metrics...</p>,
+    ssr: false,
+  }
+);
+const RevenueChart = dynamic(
+  () =>
+    import("@/components/dashboard/RevenueChart").then(
+      (mod) => mod.RevenueChart
+    ),
+  {
+    loading: () => <p>Loading chart...</p>,
+    ssr: false,
+  }
+);
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -47,12 +53,9 @@ export default function DashboardPage() {
   const { data: metrics, isLoading: isLoadingMetrics } = useMetrics();
   const metricsData = metrics?.data || {};
 
-  console.log("Metrics Data: ", metricsData);
-
   return (
     <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome back, {user?.firstName}!
@@ -63,78 +66,21 @@ export default function DashboardPage() {
         </div>
 
         {/* Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Revenue</CardTitle>
-              <CardDescription>This month</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                $
-                {!isLoadingMetrics
-                  ? metricsData?.revenueThisMonth?.toFixed(2)
-                  : 0}
-              </div>
-            </CardContent>
-          </Card>
+        <MetricsCards
+          metricsData={metricsData}
+          isLoadingMetrics={isLoadingMetrics}
+        />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Monthly Active Users</CardTitle>
-              <CardDescription>This month</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {!isLoadingMetrics ? metricsData?.activeUsersThisMonth : 0}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Churned Users</CardTitle>
-              <CardDescription>From last month</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {!isLoadingMetrics ? metricsData?.churnedUsers : 0}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Charts and Analytics */}
+        {/* Chart */}
         <div className="mb-4">
-          {!isLoadingMetrics ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Revenue Trend</CardTitle>
-                <CardDescription>Daily revenue over time</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={metricsData?.revenueTrend || []}>
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip
-                      formatter={(value: number) => `$${value.toFixed(2)}`}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="total"
-                      stroke="#3b82f6"
-                      strokeWidth={2}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+          {!isLoadingMetrics && metricsData?.revenueTrend ? (
+            <RevenueChart data={metricsData.revenueTrend} />
           ) : (
-            <p>...Loading</p>
+            <p>Loading chart...</p>
           )}
         </div>
 
+        {/* Transactions */}
         <div className="grid grid-cols-1">
           <TransactionsTable
             transactions={transactionsData?.data || []}
